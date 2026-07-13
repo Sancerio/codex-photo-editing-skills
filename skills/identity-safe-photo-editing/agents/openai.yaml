@@ -1,0 +1,4 @@
+interface:
+  display_name: "Identity-Safe Photo Editing"
+  short_description: "Edit photos while preserving identity and pixels"
+  default_prompt: "Use $identity-safe-photo-editing to make a localized photo edit while preserving faces and protected regions exactly."
