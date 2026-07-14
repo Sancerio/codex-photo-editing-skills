@@ -1,6 +1,6 @@
 ---
 name: identity-safe-photo-editing
-description: Edit, verify, export, and conservatively upscale raster photographs while preserving identity, geometry, and protected pixels. Use for object or person removal, background cleanup, localized AI inpainting, shadow removal, color or lighting changes, hair or wardrobe retouching, resolution recovery, and workflows where raw AI previews must be distinguished from pixel-preserving composites.
+description: Edit, verify, export, and conservatively upscale raster photographs while preserving identity, geometry, and protected pixels. Use for object or person removal, background cleanup, localized AI inpainting, shadow removal, color or lighting changes, hair or wardrobe retouching, resolution recovery, web and full-size delivery folders, and workflows where raw AI previews must be distinguished from pixel-preserving composites.
 ---
 
 # Identity-Safe Photo Editing
@@ -75,6 +75,29 @@ python scripts/upscale_photo.py \
 
 Prompt wording such as "high resolution" may improve perceived detail but does not guarantee output dimensions. Verify actual pixels after generation.
 
+### Web and full-size delivery convention
+
+Use this convention when delivering edited photographer JPEGs or mirroring an existing gallery structure:
+
+- Create sibling folders named `EDITED WEB SIZE` and `EDITED FULL SIZE`.
+- Use the original photo basename in both folders, such as `PRG03847.jpg`.
+- Put the user-approved JPEG master in `EDITED FULL SIZE` as a byte-for-byte copy. Do not re-encode, resize, sharpen, or silently substitute it.
+- Export `EDITED WEB SIZE` from that exact master as an sRGB JPEG with a 2,500-pixel long edge. Round the other dimension to the nearest pixel while preserving aspect ratio; typical 3:2 outputs are `2500x1667` or `1667x2500`.
+- Use deterministic resizing only. Do not apply generative enhancement or face restoration to the web export.
+- Match an existing delivery's folder names, long-edge size, color profile, and compression when the user provides one; otherwise use the defaults above.
+
+Run the bundled exporter with one or more approved JPEG masters:
+
+```bash
+python scripts/export_delivery_sizes.py \
+  --input PRG03847.jpg PRG04224.jpg \
+  --name PRG03847.jpg PRG04224.jpg \
+  --output-root delivery \
+  --report delivery/export-verification.json
+```
+
+Use `--name` when approved masters have workflow suffixes but delivery files must retain the original camera basenames; provide one safe JPEG name per input in the same order. The exporter preserves each full-size file byte-for-byte, creates the 2,500-pixel web JPEG, and records dimensions, sizes, and SHA-256 hashes. If the approved master is not already JPEG, create and approve a full-size JPEG first rather than claiming a converted file is byte-identical.
+
 ## Asset selection and delivery safety
 
 Before uploading or handing off:
@@ -134,6 +157,7 @@ The script composites the candidate only where the mask is nonzero, keeps every 
 7. Inspect the actual exported JPEG or PNG, not only an application preview.
 8. Deliver a high-quality JPEG for common use and a lossless PNG when useful.
 9. For upscales, verify target dimensions, inspect 100% crops, and record whether generative restoration was disabled.
-10. Report the method honestly: raw AI preview, localized generated patch plus deterministic compositing, semantic-matte transfer, pointwise color grading, or conservative interpolation.
+10. For web/full-size bundles, confirm the full-size SHA-256 equals the approved master, confirm the web long edge is 2,500 pixels, and read uploaded names and byte sizes back from the destination.
+11. Report the method honestly: raw AI preview, localized generated patch plus deterministic compositing, semantic-matte transfer, pointwise color grading, conservative interpolation, or deterministic delivery resizing.
 
 If any check fails, revise the candidate or mask and rerun. Do not deliver a known-bad draft.

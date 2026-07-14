@@ -1,4 +1,4 @@
 interface:
   display_name: "Identity-Safe Photo Editing"
-  short_description: "Edit and upscale photos with identity safeguards"
-  default_prompt: "Use $identity-safe-photo-editing to edit or conservatively upscale this photo while preserving identity, geometry, and clear asset lineage."
+  short_description: "Edit, upscale, and export photos with identity safeguards"
+  default_prompt: "Use $identity-safe-photo-editing to edit, conservatively upscale, or export this photo in web and full-size delivery folders while preserving identity, geometry, and clear asset lineage."
