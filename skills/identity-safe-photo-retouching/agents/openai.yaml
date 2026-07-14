@@ -1,0 +1,4 @@
+interface:
+  display_name: "Identity-Safe Photo Retouching"
+  short_description: "Retouch photos while protecting identity pixels"
+  default_prompt: "Use $identity-safe-photo-retouching to retouch this photo while preserving identity and protected pixels."

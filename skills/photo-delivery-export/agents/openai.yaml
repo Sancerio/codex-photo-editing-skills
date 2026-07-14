@@ -1,0 +1,4 @@
+interface:
+  display_name: "Photo Delivery Export"
+  short_description: "Create verified web and full-size photo folders"
+  default_prompt: "Use $photo-delivery-export to create verified web-size and full-size delivery folders for these approved photos."

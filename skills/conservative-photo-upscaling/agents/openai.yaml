@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conservative Photo Upscaling"
+  short_description: "Upscale photos without generative face changes"
+  default_prompt: "Use $conservative-photo-upscaling to enlarge this approved photo without generative face restoration."

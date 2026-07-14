@@ -2,30 +2,31 @@
 
 Reusable Codex skills for professional photo editing with explicit identity and pixel-preservation safeguards.
 
-## Included skill
+## Included skills
 
-- `identity-safe-photo-editing` — localized AI-assisted retouching, deterministic compositing, protected-region verification, asset-lineage checks, background cleanup, non-generative color grading, and conservative resolution upscaling.
+- `identity-safe-photo-retouching` — localized retouching, masking, deterministic compositing, color grading, and protected-pixel verification.
+- `conservative-photo-upscaling` — non-generative resolution enlargement and upscale verification.
+- `photo-delivery-export` — verified web/full-size folders, camera filenames, and upload readback.
+- `identity-safe-photo-editing` — lightweight router for workflows spanning multiple focused skills.
 
 ## Install
 
-Copy the skill directory into your Codex skills folder:
+Copy the skill directories into your Codex skills folder:
 
 ```bash
-cp -R skills/identity-safe-photo-editing "${CODEX_HOME:-$HOME/.codex}/skills/"
+cp -R skills/* "${CODEX_HOME:-$HOME/.codex}/skills/"
 ```
 
-The bundled compositor and upscaler require Python 3 and Pillow.
+The bundled scripts require Python 3 and Pillow.
 
 ## Repository layout
 
 ```text
 skills/
-└── identity-safe-photo-editing/
-    ├── SKILL.md
-    ├── agents/openai.yaml
-    └── scripts/
-        ├── composite_local_edit.py
-        └── upscale_photo.py
+├── identity-safe-photo-editing/       # composition only
+├── identity-safe-photo-retouching/    # composite_local_edit.py
+├── conservative-photo-upscaling/      # upscale_photo.py
+└── photo-delivery-export/             # export_delivery_sizes.py
 ```
 
 ## License
